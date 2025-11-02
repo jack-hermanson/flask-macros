@@ -1,4 +1,4 @@
-{% macro form_group(form, name, type="text", required=False, class="", id=None, render_kw={}) %}
+{% macro form_group(form, name, type="text", required=False, class="", id=None, col_lg=12, input_group_text=None, render_kw={}) %}
     <div class="form-group {{ class }}">
         {% if form[name].type == "BooleanField" %}
             <div class="form-check">
@@ -13,13 +13,30 @@
                 class=("form-label " + ("required" if required else "")),
                 for=(id if id else form[name].id)) }}
 
-            {{ form[name](
-                class=(
-                    ("form-select " if form[name].type == "SelectField" else "form-control ") +
-                    ("is-invalid" if form[name].errors else "")
-                ),
-                id=(id if id else form[name].id),
-                **render_kw) }}
+            <div class="row">
+                <div class="col-12 col-lg-{{ col_lg }}">
+                    {% if input_group_text != None %}
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            {{ form[name](
+                            class=(
+                                ("form-control ") +
+                                ("is-invalid" if form[name].errors else "")
+                            ),
+                            id=(id if id else form[name].id),
+                            **render_kw) }}
+                        </div>
+                    {% else %}
+                        {{ form[name](
+                            class=(
+                                ("form-select " if form[name].type == "SelectField" else "form-control ") +
+                                ("is-invalid" if form[name].errors else "")
+                            ),
+                            id=(id if id else form[name].id),
+                            **render_kw) }}
+                    {% endif %}
+                </div>
+            </div>
         {% endif %}
 
         {% if form[name].errors %}
