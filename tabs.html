@@ -4,8 +4,18 @@
     </ul>
 {% endmacro %}
 
-{% macro tab(name, url, is_active=False) %}
+{% macro tab(name, url, is_active=False, badge=None) %}
     <li class="nav-item">
-        <a class="nav-link {% if is_active %} active{% endif %}" aria-current="page" href="{{ url }}" role="tab">{{ name }}</a>
+        <a
+            class="nav-link text-nowrap px-2 px-sm-3 {% if is_active %} active{% endif %}"
+            aria-current="page"
+            href="{{ url }}"
+            role="tab"
+        >
+            {{ name }}
+            {% if badge %}
+                <span class="badge bg-danger rounded-5" style="font-size: xx-small;">{{ badge }}</span>
+            {% endif %}
+        </a>
     </li>
 {% endmacro %}
